@@ -1,10 +1,9 @@
+let active = true;
 if (window.location.origin !== "https://dojo.code.ninja") {
     cardContainer.innerHTML = "Please follow the instructions in the readme";
     cardContainer.className = "logged-out";
-    return;
+    active = false;
 }
-
-let active = true;
 
 const update = async () => {
     // https://dojo.code.ninja/api/employee/cn-ia-quad-cities/scanins/360?isLocalStorageEnabled=true&optOutAfterSchool=true
@@ -57,7 +56,7 @@ const tryUpdate = async () => {
         setTimeout(tryUpdate, 20000);
 }
 
-tryUpdate();
+if (active) tryUpdate();
 
 
 
