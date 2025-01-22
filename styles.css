@@ -1,0 +1,140 @@
+@font-face {
+    font-family: 'FontAwesome';
+    src: url("assets/NotoSans-VariableFont_wdth\,wght.ttf");
+}
+
+body {
+    font-family: 'FontAwesome', sans-serif;
+    margin: 0;
+    background-image: linear-gradient(180deg,#5830d7 0%,#338fbf 68%);
+    background-size: 100% 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 72px min-content 1fr;
+}
+
+#background-img {
+    height: 100%;
+    width: 100%;
+    background-image: url("https://dojo.code.ninja/images/bg/bg.svg");
+    background-size: cover;
+    background-position: 0% 100%;
+    position: absolute;
+    z-index: -1;
+}
+
+/* content */
+
+#time-header {
+    width: 100%;
+    height: 72px;
+    font-size: 36px;
+    font-weight: bold;
+    background-color: #FFF;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#header-img {
+    position: relative;
+    bottom: 2px;
+}
+
+#card-container {
+    padding: 8px;
+    overflow: auto;
+    text-align: center;
+}
+#card-container.logged-out {
+    color: #F99;
+    font-size: 32px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* name card */
+
+.card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 8px;
+    filter: drop-shadow(6px 6px 10px #222);
+}
+
+.card-close {
+    position: relative;
+    top: 8px;
+    left: 8px;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: #BD0505;
+    align-self: flex-end;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.05s linear;
+}
+.card:hover .card-close {
+    opacity: 1;
+}
+
+/* name card header */
+
+.card-header {
+    background-color: #EEE;
+    color: #506690;
+    display: grid;
+    width: 416px;
+    padding: 0 12px;
+    grid-template-columns: 128px 1fr 128px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+.card-header span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-belt {
+    padding: 12px;
+    height: 76px;
+    width: auto;
+}
+
+.card-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.card-title span {
+    margin: 4px 0;
+}
+
+.card-name {font-size: 26px;}
+.card-login {font-size: 20px;}
+
+.card-minutes {font-size: 54px;}
+.card-minutes.low {color: #BD0505;}
+
+/* name card footer */
+
+.card-footer {
+    background-color: #0D1039;
+    color: #EEE;
+    font-size: 16px;
+    text-align: center;
+    width: 384px;
+    border-radius: 0 0 4px 4px;
+    padding: 12px;
+}
+.card-footer.jr {background-color: #502670;}
+.card-footer.stem {background-color: #9A9830;}
+.card-footer.free {background-color: #51812C;}
+.card-footer.low {background-color: #BD0505;}
+
+.card-footer div {
+    margin: 4px;
+}

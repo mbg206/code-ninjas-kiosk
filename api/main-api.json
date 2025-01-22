@@ -1,0 +1,61 @@
+{
+    "optOutAfterSchoolProgram": true,
+    "scanIns": [
+        {
+            "key": 6174048,
+            "userGuid": "25c8f071-b8f1-472d-b054-390f1f647602",
+            "firstName": "Wesley",
+            "lastName": "Anderson",
+            "hasBirthdayToday": false,
+            "dateCreated": "2025-01-17T22:00:55+00:00",
+            "beltName": "White",
+            "totalHours": 1,
+            "scanInSessionLength": 1,
+            "isAfterSchool": false,
+            "programSlug": "code-ninjas-create",
+            "jrTotalMins": 0
+        },
+        {
+            "key": 6174068,
+            "userGuid": "59eaf877-d288-4e08-a7c9-633234e50791",
+            "firstName": "Joseph",
+            "lastName": "Winkler",
+            "hasBirthdayToday": false,
+            "dateCreated": "2025-01-17T22:01:13+00:00",
+            "beltName": "White",
+            "totalHours": 1,
+            "scanInSessionLength": 1,
+            "isAfterSchool": false,
+            "programSlug": "code-ninjas-create",
+            "jrTotalMins": 0
+        },
+        {
+            "key": 6174110,
+            "userGuid": "7525b95a-f5eb-415a-8696-aaf1edca0ea9",
+            "firstName": "Caleb",
+            "lastName": "Skrzyniarz ",
+            "hasBirthdayToday": false,
+            "dateCreated": "2025-01-17T22:02:18+00:00",
+            "beltName": "Purple",
+            "totalHours": 2,
+            "scanInSessionLength": 2,
+            "isAfterSchool": false,
+            "programSlug": "code-ninjas-create",
+            "jrTotalMins": 0
+        },
+        {
+            "key": 6174202,
+            "userGuid": "3c95ad6b-b8bb-4d03-91b7-285eb76afb73",
+            "firstName": "Noah",
+            "lastName": "Schlue",
+            "hasBirthdayToday": false,
+            "dateCreated": "2025-01-17T22:05:05+00:00",
+            "beltName": "White",
+            "totalHours": 3,
+            "scanInSessionLength": 1,
+            "isAfterSchool": false,
+            "programSlug": "code-ninjas-create",
+            "jrTotalMins": 0
+        }
+    ]
+}
