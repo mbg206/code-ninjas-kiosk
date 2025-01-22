@@ -1,1 +1,1 @@
-javascript:(async()%3D%3E%7Bconst%20r%3Dawait%20fetch(%22https%3A%2F%2Fmbg206.github.io%2Fcn-kiosk-better%2F%22)%3Bconst%20t%3Dawait%20r.text()%3Bconst%20d%3Ddocument%3Bd.open()%3Bd.write(t)%3Bd.close()%3B%7D)()%3B
+javascript:(async()%3D%3E%7Bif(typeof%20students%3D%3D%22object%22)return%3Bconst%20r%3Dawait%20fetch(%22https%3A%2F%2Fmbg206.github.io%2Fcn-kiosk-better%2F%22)%3Bconst%20t%3Dawait%20r.text()%3Bconst%20d%3Ddocument%3Bd.open()%3Bd.write(t)%3Bd.close()%3B%7D)()%3B
