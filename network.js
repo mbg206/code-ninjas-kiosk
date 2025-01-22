@@ -1,3 +1,9 @@
+if (window.location.origin !== "https://dojo.code.ninja") {
+    cardContainer.innerHTML = "Please follow the instructions in the readme";
+    cardContainer.className = "logged-out";
+    return;
+}
+
 let active = true;
 
 const update = async () => {
