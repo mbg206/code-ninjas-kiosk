@@ -72,7 +72,7 @@ const updateStudents = (newStudents) => {
             continue;
 
         if (students.has(student.id)) {
-            const existing = students.get(student);
+            const existing = students.get(student.id);
             if (
                 (existing.sessionLength !== student.sessionLength) &&
                 (student.sessionLength !== null)

@@ -40,6 +40,7 @@ body {
 #header-img {
     position: relative;
     bottom: 2px;
+    filter: drop-shadow(6px 6px 10px #222);
 }
 
 #card-container {
