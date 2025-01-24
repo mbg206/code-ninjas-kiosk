@@ -11,14 +11,7 @@ class XMLHttpRequest extends window.XMLHttpRequest {
     setRequestHeader(name, value) {
         this.headers.set(name, value);
         super.setRequestHeader(name, value);
-        
-        const resend = () => setTimeout(this.resend, 60000);
-        this.addEventListener("error", resend);
-        this.addEventListener("timeout", resend);
-        this.addEventListener("load", () => {
-            p(this.responseText);
-            resend();
-        });
+    
     }
 
     send() {
@@ -26,6 +19,14 @@ class XMLHttpRequest extends window.XMLHttpRequest {
         document.open();
         document.write("Please keep this window open!");
         document.close();
+
+        const resend = () => setTimeout(() => this.resend(), 60000);
+        this.addEventListener("error", resend);
+        this.addEventListener("timeout", resend);
+        this.addEventListener("load", () => {
+            p(this.responseText);
+            resend();
+        });
     }
 
     resend() {
