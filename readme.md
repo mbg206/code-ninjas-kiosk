@@ -8,11 +8,11 @@ An improved version of the Code Ninjas Kiosk display.
 
 - Support for pulling sessions from Sensei Web (Impact)
 
- - Some ninjas at my center are bugged which is why I needed this
+  - Some ninjas at my center are bugged which is why I needed this
 
 - Automatic reloading of ninjas
 
- - For when a session length update occurs during the session
+  - For when a session length update occurs during the session
 
 - Overall reduced latency
 
