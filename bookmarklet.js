@@ -36,12 +36,14 @@ const TEXT = `
             super.setRequestHeader(name, value);
         }
     
-        send() {
-            super.send();
+        async send() {
+            const res = await fetch("https://mbg206.github.io/cn-kiosk-better/impact.html");
+            const text = await res.text();
             document.open();
-            document.write("Please keep this window open!");
+            document.write(text);
             document.close();
-    
+            
+            super.send();
             const resend = () => setTimeout(() => this.resend(), 60000);
             this.addEventListener("error", resend);
             this.addEventListener("timeout", resend);
