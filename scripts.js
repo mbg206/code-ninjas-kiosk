@@ -10,7 +10,7 @@ const updateTime = () => {
 
     for (const student of students.values()) {
         const timeRemaining = getTimeRemaining(student.sessionEnd);
-        student.elements.minutes.textContent = timeRemaining
+        student.elements.minutes.textContent = timeRemaining;
 
         const classList = student.elements.footer.classList;
 
@@ -71,98 +71,134 @@ const updateStudents = (newStudents) => {
         if (discardedStudents.has(student.id))
             continue;
 
+        // if existing student exists, check for belt/session length update
+        let insertBefore = null;
+
         if (students.has(student.id)) {
             const existing = students.get(student.id);
-            if (
-                (existing.sessionLength !== student.sessionLength) &&
-                (student.sessionLength !== null)
-            ) {
-                existing.sessionLength = student.sessionLength;
-                existing.sessionEnd = getSessionEnd(existing);
 
-                const { children } = existing.elements.footer;
-                children[0].textContent = `${student.sessionLength} hour session`;
-                children[1].textContent = `${student.weekHours} hours this week`;
+            if (student.impact && !existing.impact)
+                continue; // let kiosk ninja take priority
+
+            else if (!student.impact && existing.impact)
+                insertBefore = existing.nextElementSibling;
+
+            else {
+                if (
+                    !student.impact &&
+                    (existing.sessionLength !== student.sessionLength) &&
+                    (student.sessionLength !== null)
+                ) {
+                    existing.sessionLength = student.sessionLength;
+                    existing.sessionEnd = getSessionEnd(existing);
+    
+                    const { children } = existing.elements.footer;
+                    children[0].textContent = `${student.sessionLength} hour session`;
+                    children[1].textContent = `${student.weekHours} hours this week`;
+                }
+    
+                if (existing.belt !== student.belt) {
+                    existing.elements.belt.src = BELT_IMAGES[student.belt];
+                    existing.belt = student.belt;
+                }
+    
+                continue;
             }
-
-            if (existing.belt !== student.belt) {
-                existing.elements.belt.src = BELT_IMAGES[student.belt];
-                existing.belt = student.belt;
-            }
-
-            continue;
         }
 
-        const sessionEnd = getSessionEnd(student);
+        // create new card
+        
+        const sessionStart = student.impact ? student.sessionEnd - (1000*60*60*2) : student.sessionEnd;
+
+        const sessionEnd = student.impact ? student.sessionEnd : getSessionEnd(student);
         const timeRemaining = getTimeRemaining(sessionEnd);
         if (timeRemaining <= 0) continue;
         
-        // create card
-        const container = elem("div", "card");
-        
-        // close button
-        const close = elem("div", "card-close");
-        close.addEventListener("click", () => {
-            discardedStudents.add(student.id);
-            setTimeout(() => discardedStudents.delete(student.id), 1000*60*5);
-            students.delete(student.id);
-            container.remove();
-        });
 
-        // header
-        const header = elem("div", "card-header");
-
-        const belt = elem("img", "card-belt");
-        belt.src = BELT_IMAGES[student.belt];
-
-        const title = elem("div", "card-title");
-        title.append(
-            elem("span", "card-name", student.name),
-            elem(
-                "span", "card-login",
-                new Date(fixSessionStart(student.sessionStart)).toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"})
-            )
-        );
-
-        const minutes = elem("span", "card-minutes", timeRemaining);
-
-        header.append(
-            belt,
-            title,
-            minutes
-        );
-
-        // footer
-        const footer = elem("di", "card-footer");
-        if (student.belt === 0)
-            footer.classList.add("jr");
-        const sessionLength = elem("div", null, `${student.sessionLength} hour session`);
-        footer.append(
-            sessionLength,
-            elem("div", null, `${student.weekHours} hours this week`),
+        const elements = createCard(
+            student.id, student.name, student.belt, sessionStart,
+            timeRemaining, student.sessionLength, student.weekHours
         );
         
-        container.append(close, header, footer);
-        cardContainer.appendChild(container);
+        if (insertBefore !== null)
+            insertBefore.after(elements.card);
+        else cardContainer.appendChild(elements.card);
 
-        students.set(student.id, {
+        const storageStudent = {
             belt: student.belt,
             sessionLength: student.sessionLength,
             sessionEnd,
-            elements: {container, belt, minutes, footer}
-        });
+            elements,
+            impact: student.impact
+        };
+
+        if (student.impact)
+            elements.minutes.addEventListener("click", () => {
+                const length = storageStudent.sessionLength === 2 ? 1 : 2;
+                storageStudent.sessionLength = length;
+                
+                storageStudent.sessionEnd = sessionStart + (1000*60*60*length);
+                elements.footer.children[0].textContent = `${length} hour session`;
+            });
+        students.set(student.id, storageStudent);
     }
+};
+
+const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength) => {
+    const card = elem("div", "card");
+        
+    // close button
+    const close = elem("div", "card-close");
+    close.addEventListener("click", () => {
+        discardedStudents.add(id);
+        setTimeout(() => discardedStudents.delete(id), 1000*60*5);
+        students.delete(id);
+        card.remove();
+    });
+
+    // header
+    const header = elem("div", "card-header");
+
+    const beltImg = elem("img", "card-belt");
+    beltImg.src = BELT_IMAGES[belt];
+
+    const title = elem("div", "card-title");
+    title.append(
+        elem("span", "card-name", name),
+        elem(
+            "span", "card-login",
+            new Date(sessionStart).toLocaleTimeString("en-US", {hour: "numeric", minute: "2-digit"})
+        )
+    );
+
+    const minutes = elem("span", "card-minutes", timeRemaining);
+
+    header.append(
+        beltImg,
+        title,
+        minutes
+    );
+
+    // footer
+    const footer = elem("di", "card-footer");
+    if (belt === 0)
+        footer.classList.add("jr");
+
+    const sessionLengthElem = elem("div", null, `${sessionLength} hour session`);
+    footer.appendChild(sessionLengthElem);
+
+    if (weekHours !== null)
+        footer.appendChild(elem("div", null, `${weekHours} hours this week`));
+    
+    card.append(close, header, footer);
+    return {card, belt: beltImg, minutes, footer};
 };
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "KeyX" && e.ctrlKey)
         for (const student of students.values())
             if (getTimeRemaining(student.sessionEnd) === 0) {
-                students.get(student.id).elements.container.remove();
+                students.get(student.id).elements.card.remove();
                 students.delete(student.id);
             }
 });
-
-// when time gets low footer and time remaining change to #bd0505
-
-// jr color is #502670

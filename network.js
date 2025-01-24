@@ -1,14 +1,18 @@
 let active = true;
 if (window.location.origin !== "https://dojo.code.ninja") {
-    //cardContainer.innerHTML = "Please follow the instructions in the readme";
-    //cardContainer.className = "logged-out";
+    cardContainer.innerHTML = "Please follow the instructions in the readme";
+    cardContainer.className = "logged-out";
     active = false;
 }
 
-const update = async () => {
-    // https://api.impact.codeninjas.com/center/api/common/ninjas?sortBy=None&&displayFilters=All
-    // https://api.impact.codeninjas.com/center/api/common/ninjas?sortBy=None&&displayFilters=Online
+const fixName = (firstName, lastName) =>
+    firstName.charAt(0).toUpperCase() +
+    firstName.slice(1).toLowerCase() +
+    " " +
+    lastName.charAt(0).toUpperCase();
+const nameToId = (firstName, lastName) => firstName.toUpperCase() + lastName.toUpperCase();
 
+const update = async () => {
     const res = await fetch("https://dojo.code.ninja/api/employee/cn-ia-quad-cities/scanins/360");
     if (!res.ok) return; // FIXME not ok when logged out?
     const data = await res.json();
@@ -22,9 +26,9 @@ const update = async () => {
 
     const ninjas = [];
     for (const scanIn of data.scanIns) {
-        const ninja = {
-            name: `${scanIn.firstName} ${scanIn.lastName.charAt(0).toUpperCase()}`,
-            id: scanIn.key,
+        ninjas.push({
+            name: fixName(scanIn.firstName, scanIn.lastName),
+            id: nameToId(scanIn.firstName, scanIn.lastName),
 
             belt: (scanIn.programSlug === "code-ninjas-jr") ? 0 : [
                 "White", "Yellow", "Orange", "Green",
@@ -33,10 +37,9 @@ const update = async () => {
 
             sessionStart: scanIn.dateCreated,
             sessionLength: scanIn.scanInSessionLength,
-            weekHours: scanIn.totalHours
-        };
-
-        ninjas.push(ninja);
+            weekHours: scanIn.totalHours,
+            impact: false
+        });
     }
 
     updateStudents(ninjas);
@@ -51,10 +54,11 @@ const tryUpdate = async () => {
 
     if (active)
         setTimeout(tryUpdate, 20000);
-}
+};
 
 if (active) tryUpdate();
 
+// impact hook button
 
 const hookButton = document.getElementById("impact-hook");
 let impactWindow = window;
@@ -65,7 +69,6 @@ setInterval(() => {
 
 hookButton.addEventListener("click", async () => {
     hookButton.disabled = true;
-    const needInterval = impactWindow === null;
     impactWindow = window.open("https://sensei.codeninjas.com/my-ninjas");
     
     const success = await new Promise((res) => {
@@ -82,7 +85,7 @@ hookButton.addEventListener("click", async () => {
             }
         }, 1000);
 
-        window.addEventListener("message", messageHandler, {once: true})
+        window.addEventListener("message", messageHandler, {once: true});
     });
 
     hookButton.disabled = false;
@@ -90,9 +93,23 @@ hookButton.addEventListener("click", async () => {
         hookButton.style.visibility = "hidden";
 });
 
+// impact hook handling
+
 window.addEventListener("message", (e) => {
     const { data } = e;
     if (data === null) return;
 
-    console.log(data);
-}, false)
+    const impactNinjas = JSON.parse(data).ninjaInfos;
+    const ninjas = [];
+    for (const ninja of impactNinjas) {
+        ninjas.push({
+            name: fixName(ninja.firstName, ninja.lastName),
+            id: nameToId(ninja.firstName, ninja.lastName),
+            belt: ninja.currentCouseSequence + 1,
+            sessionLength: 1,
+            sessionEnd: fixSessionStart(ninja.sessionLogoutTime),
+            weekHours: null,
+            impact: true,
+        });
+    }
+}, false);
