@@ -108,7 +108,7 @@ const updateStudents = (newStudents) => {
 
         // create new card
         
-        const sessionStart = student.impact ? student.sessionEnd - (1000*60*60*2) : student.sessionEnd;
+        const sessionStart = student.impact ? student.sessionEnd - (1000*60*60*2) : student.sessionStart;
 
         const sessionEnd = student.impact ? student.sessionEnd : getSessionEnd(student);
         const timeRemaining = getTimeRemaining(sessionEnd);
