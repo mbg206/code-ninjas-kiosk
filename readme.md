@@ -28,4 +28,4 @@ javascript:(async()%3D%3E%7Bconst%20r%3Dawait%20fetch(%22https%3A%2F%2Fmbg206.gi
 
 ### Sensei Web (Impact)
 
-When you hover your mouse over the top left of the kiosk, a button will appear labeled "Enable Impact sessions". Click this button and when the new Sensei Web tab opens, click the same bookmark from above. This new tab will send information to the main kiosk tab, so it needs to remain open for Sensei Web sessions to function correctly.
+When you hover your mouse over the top left of the kiosk, a button will appear labeled "Enable Impact sessions". Click this button and when the new Sensei Web tab opens and the My Ninja page *fully* loads, click the same bookmark from above. This new tab will send information to the main kiosk tab, so it needs to remain open for Sensei Web sessions to function correctly.
