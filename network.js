@@ -10,6 +10,7 @@ const update = async () => {
     // https://api.impact.codeninjas.com/center/api/common/ninjas?sortBy=None&&displayFilters=Online
 
     const res = await fetch("https://dojo.code.ninja/api/employee/cn-ia-quad-cities/scanins/360");
+    if (!res.ok) return; // FIXME not ok when logged out?
     const data = await res.json();
     
     if (data.message !== undefined) {
@@ -56,29 +57,42 @@ if (active) tryUpdate();
 
 
 const hookButton = document.getElementById("impact-hook");
-let impactWindow = null;
+let impactWindow = window;
+
+setInterval(() => {
+    if (impactWindow.closed) hookButton.style.visibility = "visible";
+}, 1000);
 
 hookButton.addEventListener("click", async () => {
     hookButton.disabled = true;
+    const needInterval = impactWindow === null;
     impactWindow = window.open("https://sensei.codeninjas.com/my-ninjas");
     
     const success = await new Promise((res) => {
+        const messageHandler = () => {
+            clearInterval(closedInterval);
+            res(true);
+        };
+
         const closedInterval = setInterval(() => {
             if (impactWindow.closed) {
                 clearInterval(closedInterval);
+                window.removeEventListener("message", messageHandler);
                 res(false);
             }
         }, 1000);
 
-        window.addEventListener("message", () => {
-            clearInterval(closedInterval);
-            res(true);
-        }, {once: true})
+        window.addEventListener("message", messageHandler, {once: true})
     });
-    console.log(success);
-    if (!success) hookButton.disabled = false;
+
+    hookButton.disabled = false;
+    if (success)
+        hookButton.style.visibility = "hidden";
 });
 
 window.addEventListener("message", (e) => {
-    console.log(e)
+    const { data } = e;
+    if (data === null) return;
+
+    console.log(data);
 }, false)
