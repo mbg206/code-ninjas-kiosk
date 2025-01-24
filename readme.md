@@ -16,6 +16,10 @@ An improved version of the Code Ninjas Kiosk display.
 
 - Overall reduced latency
 
+- Added a shortcut to remove all ninjas with 0 minutes
+
+  - Ctrl+X
+
 ## How To Use
 
 To use, create a new bookmark, copy the text from [here](bookmarklet/bookmarklet.txt) and paste it into the URL. Then open the kiosk page and click the bookmark, and it will load this version of the kiosk.
