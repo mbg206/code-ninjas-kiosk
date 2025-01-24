@@ -4,13 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ninjas in the Dojo</title>
-    <base href="https://mbg206.github.io/cn-kiosk-better/">
+<!--<base href="https://mbg206.github.io/cn-kiosk-better/">-->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div id="background-img"></div>
 
-    <div id="time-header"></div>
+    <div id="time-header">
+        <span id="time"></span>
+        <button id="impact-hook">Enable Impact sessions</button>
+    </div>
     <img src="https://dojo.code.ninja/images/kiosk/curve-shape-kiosk-top.svg" id="header-img"></div>
 
     <div id="card-container"><!--
@@ -32,8 +35,6 @@
             </div>
      --></div>
     </div>
-
-    <button id="impact-hook">Enable Impact sessions</button>
 
     <script src="scripts.js"></script>
     <script src="network.js"></script>

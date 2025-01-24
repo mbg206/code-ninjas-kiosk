@@ -145,7 +145,7 @@ body {
 
 #impact-hook {
     position: fixed;
-    bottom: 0px;
+    top: 0px;
     left: 0px;
     margin: 24px;
     padding: 4px;
@@ -157,6 +157,6 @@ body {
     opacity: 0;
     transition: opacity 0.05s linear;
 }
-#impact-hook:hover {
+#time-header:hover #impact-hook {
     opacity: 1;
 }

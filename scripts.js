@@ -3,7 +3,7 @@ const getTimeRemaining = (sessionEnd) =>
     Math.max(0, Math.floor((sessionEnd - Date.now()) / 60000));
 
 const students = new Map();
-const timeLabel = document.getElementById("time-header");
+const timeLabel = document.getElementById("time");
 
 const updateTime = () => {
     timeLabel.textContent = new Date().toLocaleTimeString("en-US", {minute: "2-digit", hour: "numeric"});
