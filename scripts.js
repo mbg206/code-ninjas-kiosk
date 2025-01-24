@@ -149,7 +149,7 @@ const updateStudents = (newStudents) => {
             belt: student.belt,
             sessionLength: student.sessionLength,
             sessionEnd,
-            elements: {belt, minutes, footer}
+            elements: {container, belt, minutes, footer}
         });
     }
 };
@@ -158,8 +158,8 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "KeyX" && e.ctrlKey)
         for (const student of students.values())
             if (getTimeRemaining(student.sessionEnd) === 0) {
+                students.get(student.id).elements.container.remove();
                 students.delete(student.id);
-                container.remove();
             }
 });
 

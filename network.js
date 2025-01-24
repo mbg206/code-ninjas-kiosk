@@ -1,7 +1,7 @@
 let active = true;
 if (window.location.origin !== "https://dojo.code.ninja") {
-    cardContainer.innerHTML = "Please follow the instructions in the readme";
-    cardContainer.className = "logged-out";
+    //cardContainer.innerHTML = "Please follow the instructions in the readme";
+    //cardContainer.className = "logged-out";
     active = false;
 }
 
@@ -55,7 +55,30 @@ const tryUpdate = async () => {
 if (active) tryUpdate();
 
 
+const hookButton = document.getElementById("impact-hook");
+let impactWindow = null;
 
-// normal API returns
-// {"message":"Authorization has been denied for this request."}
-// when logged out
+hookButton.addEventListener("click", async () => {
+    hookButton.disabled = true;
+    impactWindow = window.open("https://sensei.codeninjas.com/my-ninjas");
+    
+    const success = await new Promise((res) => {
+        const closedInterval = setInterval(() => {
+            if (impactWindow.closed) {
+                clearInterval(closedInterval);
+                res(false);
+            }
+        }, 1000);
+
+        window.addEventListener("message", () => {
+            clearInterval(closedInterval);
+            res(true);
+        }, {once: true})
+    });
+    console.log(success);
+    if (!success) hookButton.disabled = false;
+});
+
+window.addEventListener("message", (e) => {
+    console.log(e)
+}, false)

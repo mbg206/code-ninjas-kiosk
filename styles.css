@@ -51,6 +51,8 @@ body {
     color: #F99;
     font-size: 32px;
     background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
 }
 
 /* name card */
@@ -137,4 +139,18 @@ body {
 
 .card-footer div {
     margin: 4px;
+}
+
+/* impact hook button */
+
+#impact-hook {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    padding: 4px;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #000;
+    user-select: none;
+    cursor: pointer;
 }
