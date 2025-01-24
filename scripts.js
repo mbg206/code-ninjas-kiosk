@@ -144,7 +144,7 @@ const updateStudents = (newStudents) => {
     }
 };
 
-const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength) => {
+const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, weekHours) => {
     const card = elem("div", "card");
         
     // close button
