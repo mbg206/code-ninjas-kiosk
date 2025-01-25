@@ -33,6 +33,7 @@ const updateTime = () => {
 setInterval(updateTime, 1000);
 updateTime();
 
+// FIXME does this need to be a map?
 const discardedStudents = new Map();
 
 const elem = (element, className = null, text = null) => {
@@ -121,7 +122,7 @@ const updateStudents = (newStudents) => {
 
         const timeRemaining = getTimeRemaining(sessionEnd);
         if (timeRemaining === 0) {
-            // add to discarded list so impact ninja doesn't appear
+            // add to discarded list so impact ninja doesn't appears
             discardedStudents.set(student.id, setTimeout(() => discardedStudents.delete(student.id), 1000*60*65));
             continue;
         };
