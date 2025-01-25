@@ -112,7 +112,7 @@ const updateStudents = (newStudents) => {
 
         if (student.impact) {
             sessionStart = student.sessionEnd - (1000*60*60*2);
-            sessionEnd = student.sessionEnd - (1000*60*60*1);
+            sessionEnd = student.sessionEnd;
         }
         else {
             sessionStart = student.sessionStart;
@@ -126,6 +126,7 @@ const updateStudents = (newStudents) => {
             continue;
         };
         
+        if (student.impact) sessionEnd -= (1000*60*60*1);
 
         const elements = createCard(
             student.id, student.name, student.belt, sessionStart,
