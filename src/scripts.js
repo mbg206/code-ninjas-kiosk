@@ -108,9 +108,17 @@ const updateStudents = (newStudents) => {
 
         // create new card
         
-        const sessionStart = student.impact ? student.sessionEnd - (1000*60*60*2) : student.sessionStart;
+        let sessionStart, sessionEnd;
 
-        const sessionEnd = student.impact ? student.sessionEnd : getSessionEnd(student);
+        if (student.impact) {
+            sessionStart = student.sessionStart;
+            sessionEnd = getSessionEnd(student);
+        }
+        else {
+            sessionStart = student.sessionEnd - (1000*60*60*2);
+            sessionEnd = student.sessionEnd - (1000*60*60*1);
+        }
+
         const timeRemaining = getTimeRemaining(sessionEnd);
         if (timeRemaining <= 0) continue;
         
@@ -158,7 +166,7 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     const close = elem("div", "card-close");
     close.addEventListener("click", () => {
         discardedStudents.add(id);
-        setTimeout(() => discardedStudents.delete(id), 1000*60*30);
+        setTimeout(() => discardedStudents.delete(id), 1000*60*85); // 1000*60*30
         students.delete(id);
         card.remove();
     });
