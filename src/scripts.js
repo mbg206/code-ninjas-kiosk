@@ -224,9 +224,12 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "KeyX" && e.ctrlKey)
         for (const [id, student] of students.entries())
             if (getTimeRemaining(student.sessionEnd) === 0) {
-                discardedStudents.add(id);
-                setTimeout(() => discardedStudents.delete(id), 1000*60*75);
                 students.get(id).elements.card.remove();
                 students.delete(id);
+                
+                if (student.impact) {
+                    discardedStudents.add(id);
+                    setTimeout(() => discardedStudents.delete(id), 1000*60*60);
+                }
             }
 });
