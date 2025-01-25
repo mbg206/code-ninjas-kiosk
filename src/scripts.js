@@ -138,7 +138,14 @@ const updateStudents = (newStudents) => {
                 storageStudent.sessionLength = length;
                 
                 storageStudent.sessionEnd = sessionStart + (1000*60*60*length);
-                elements.footer.children[0].textContent = `${length} hour session`;
+
+                const { footer, minutes } = elements;
+                footer.children[0].textContent = `${length} hour session`;
+                footer.classList.remove("stem");
+                footer.classList.remove("free");
+                footer.classList.remove("low");
+                minutes.classList.remove("low");
+                updateTime();
             });
         students.set(student.id, storageStudent);
     }
@@ -187,8 +194,7 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     const sessionLengthElem = elem("div", null, `${sessionLength} hour session`);
     footer.appendChild(sessionLengthElem);
 
-    if (weekHours !== null)
-        footer.appendChild(elem("div", null, `${weekHours} hours this week`));
+    footer.appendChild(elem("div", null, weekHours !== null ? `${weekHours} hours this week` : ''));
     
     card.append(close, header, footer);
     return {card, belt: beltImg, minutes, footer};
