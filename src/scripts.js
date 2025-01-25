@@ -220,9 +220,9 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
 
 document.addEventListener("keydown", (e) => {
     if (e.code === "KeyX" && e.ctrlKey)
-        for (const student of students.values())
+        for (const [id, student] of students.entries())
             if (getTimeRemaining(student.sessionEnd) === 0) {
-                students.get(student.id).elements.card.remove();
-                students.delete(student.id);
+                students.get(id).elements.card.remove();
+                students.delete(id);
             }
 });
