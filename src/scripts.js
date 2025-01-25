@@ -80,8 +80,10 @@ const updateStudents = (newStudents) => {
             if (student.impact && !existing.impact)
                 continue; // let kiosk ninja take priority
 
-            else if (!student.impact && existing.impact)
-                insertBefore = existing.nextElementSibling;
+            else if (!student.impact && existing.impact) {
+                insertBefore = existing.card.nextElementSibling;
+                existing.card.remove();
+            }
 
             else {
                 if (
