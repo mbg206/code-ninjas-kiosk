@@ -194,7 +194,13 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     const sessionLengthElem = elem("div", null, `${sessionLength} hour session`);
     footer.appendChild(sessionLengthElem);
 
-    footer.appendChild(elem("div", null, weekHours !== null ? `${weekHours} hours this week` : ''));
+    if (weekHours !== null)
+        footer.appendChild(elem("div", null, `${weekHours} hours this week`));
+    else {
+        const e = elem("div", null, '0');
+        e.style.visibility = "hidden";
+        footer.appendChild(e);
+    }
     
     card.append(close, header, footer);
     return {card, belt: beltImg, minutes, footer};
