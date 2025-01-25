@@ -101,7 +101,9 @@ window.addEventListener("message", (e) => {
 
     const impactNinjas = JSON.parse(data).ninjaInfos;
     const ninjas = [];
+    console.log(impactNinjas);
     for (const ninja of impactNinjas) {
+        console.log(ninja);
         ninjas.push({
             name: fixName(ninja.firstName, ninja.lastName),
             id: nameToId(ninja.firstName, ninja.lastName),
