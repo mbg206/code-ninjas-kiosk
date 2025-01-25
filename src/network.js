@@ -101,7 +101,7 @@ window.addEventListener("message", (e) => {
 
     const impactNinjas = JSON.parse(data).ninjaInfos;
     const ninjas = [];
-    console.log(impactNinjas);
+
     for (const ninja of impactNinjas) {
         console.log(ninja);
         ninjas.push({
@@ -114,4 +114,6 @@ window.addEventListener("message", (e) => {
             impact: true,
         });
     }
+
+    updateStudents(ninjas);
 }, false);
