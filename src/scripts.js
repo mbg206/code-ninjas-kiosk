@@ -33,8 +33,7 @@ const updateTime = () => {
 setInterval(updateTime, 1000);
 updateTime();
 
-// FIXME does this need to be a map?
-const discardedStudents = new Map();
+const discardedStudents = new Set();
 
 const elem = (element, className = null, text = null) => {
     const e = document.createElement(element);
@@ -123,7 +122,8 @@ const updateStudents = (newStudents) => {
         const timeRemaining = getTimeRemaining(sessionEnd);
         if (timeRemaining === 0) {
             // add to discarded list so impact ninja doesn't appears
-            discardedStudents.set(student.id, setTimeout(() => discardedStudents.delete(student.id), 1000*60*65));
+            discardedStudents.add(student.id);
+            setTimeout(() => discardedStudents.delete(student.id), 1000*60*75);
             continue;
         };
         
@@ -171,7 +171,8 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     // close button
     const close = elem("div", "card-close");
     close.addEventListener("click", () => {
-        discardedStudents.set(id, setTimeout(() => discardedStudents.delete(id), 1000*60* (weekHours !== null ? 25 : 70)));
+        discardedStudents.add(id);
+        setTimeout(() => discardedStudents.delete(id), 1000*60*75);
         students.delete(id);
         card.remove();
     });
@@ -223,6 +224,8 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "KeyX" && e.ctrlKey)
         for (const [id, student] of students.entries())
             if (getTimeRemaining(student.sessionEnd) === 0) {
+                discardedStudents.add(id);
+                setTimeout(() => discardedStudents.delete(id), 1000*60*75);
                 students.get(id).elements.card.remove();
                 students.delete(id);
             }
