@@ -120,7 +120,7 @@ const updateStudents = (newStudents) => {
         }
 
         const timeRemaining = getTimeRemaining(sessionEnd);
-        if (timeRemaining <= 0) {
+        if (timeRemaining === 0) {
             // add to discarded list so impact ninja doesn't appear
             discardedStudents.set(id, setTimeout(() => discardedStudents.delete(id), 1000*60*65));
             continue;
@@ -170,7 +170,7 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     // close button
     const close = elem("div", "card-close");
     close.addEventListener("click", () => {
-        discardedStudents.set(id, setTimeout(() => discardedStudents.delete(id), 1000*60*30));
+        discardedStudents.set(id, setTimeout(() => discardedStudents.delete(id), 1000*60* (weekHours !== null ? 25 : 70)));
         students.delete(id);
         card.remove();
     });
