@@ -90,7 +90,7 @@ const updateStudents = (newStudents) => {
                     (student.sessionLength !== null)
                 ) {
                     existing.sessionLength = student.sessionLength;
-                    existing.sessionEnd = getSessionEnd(existing);
+                    existing.sessionEnd = getSessionEnd(student);
     
                     const { children } = existing.elements.footer;
                     children[0].textContent = `${student.sessionLength} hour session`;
@@ -125,7 +125,7 @@ const updateStudents = (newStudents) => {
             discardedStudents.add(student.id);
             setTimeout(() => discardedStudents.delete(student.id), 1000*60*75);
             continue;
-        };
+        }
         
         if (student.impact) sessionEnd -= (1000*60*60*1);
 
