@@ -122,7 +122,7 @@ const updateStudents = (newStudents) => {
         const timeRemaining = getTimeRemaining(sessionEnd);
         if (timeRemaining === 0) {
             // add to discarded list so impact ninja doesn't appear
-            discardedStudents.set(id, setTimeout(() => discardedStudents.delete(id), 1000*60*65));
+            discardedStudents.set(student.id, setTimeout(() => discardedStudents.delete(student.id), 1000*60*65));
             continue;
         };
         
