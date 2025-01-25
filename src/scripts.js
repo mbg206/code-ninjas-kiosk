@@ -111,12 +111,12 @@ const updateStudents = (newStudents) => {
         let sessionStart, sessionEnd;
 
         if (student.impact) {
-            sessionStart = student.sessionStart;
-            sessionEnd = getSessionEnd(student);
-        }
-        else {
             sessionStart = student.sessionEnd - (1000*60*60*2);
             sessionEnd = student.sessionEnd - (1000*60*60*1);
+        }
+        else {
+            sessionStart = student.sessionStart;
+            sessionEnd = getSessionEnd(student);
         }
 
         const timeRemaining = getTimeRemaining(sessionEnd);
