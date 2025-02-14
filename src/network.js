@@ -10,7 +10,7 @@ const fixName = (firstName, lastName) =>
     firstName.slice(1).toLowerCase() +
     " " +
     lastName.charAt(0).toUpperCase();
-const nameToId = (firstName, lastName) => firstName.toUpperCase() + lastName.toUpperCase();
+const nameToId = (firstName, lastName) => firstName.toUpperCase().trim() + lastName.toUpperCase().trim();
 
 const update = async () => {
     const res = await fetch("https://dojo.code.ninja/api/employee/cn-ia-quad-cities/scanins/360");
