@@ -12,7 +12,7 @@ An improved version of the Code Ninjas Kiosk display.
 
 - Automatic reloading of ninjas
 
-  - For when a session length update occurs during the session
+  - For when a session length or belt update occurs during the session
 
 - Overall reduced latency
 

@@ -5,7 +5,7 @@ const TEXT = `
 
 (async () => {
     // kiosk
-    if (window.location.href === "https://dojo.code.ninja/kiosk/cn-ia-quad-cities/") {
+    if (window.location.href.startsWith("https://dojo.code.ninja/kiosk/")) {
         if (typeof students=="object") return;
         const res = await fetch("https://mbg206.github.io/code-ninjas-kiosk/");
         const text = await res.text();
@@ -18,7 +18,7 @@ const TEXT = `
     else if (
                 window.location.href !== "https://sensei.codeninjas.com/my-ninjas" ||
                 typeof window.opener === "undefined"
-            ) return;
+            ) return window.location.href = "https://dojo.code.ninja/";
 
     // impact hook
 
