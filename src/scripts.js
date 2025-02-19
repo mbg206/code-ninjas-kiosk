@@ -171,7 +171,7 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     const card = elem("div", "card");
         
     // close button
-    const close = elem("div", "card-close");
+    const close = elem("div", "card-close", '\u00D7');
     close.addEventListener("click", () => {
         discardedStudents.add(id);
         setTimeout(() => discardedStudents.delete(id), 1000*60*75);
