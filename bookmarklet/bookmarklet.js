@@ -25,24 +25,24 @@ const TEXT = `
     setInterval(() => {
         if (window.opener === null) window.close();
     }, 1000);
-    
+
     const post = (data) => window.opener.postMessage(data, "https://dojo.code.ninja");
-    
+
     class XMLHttpRequest extends window.XMLHttpRequest {
         headers = new Map();
-    
+
         setRequestHeader(name, value) {
             this.headers.set(name, value);
             super.setRequestHeader(name, value);
         }
-    
+
         async send() {
             const res = await fetch("https://mbg206.github.io/code-ninjas-kiosk/impact.html");
             const text = await res.text();
             document.open();
             document.write(text);
             document.close();
-            
+
             super.send();
             const resend = () => setTimeout(() => this.resend(), 60000);
             this.addEventListener("error", resend);
@@ -52,7 +52,7 @@ const TEXT = `
                 resend();
             });
         }
-    
+
         resend() {
             this.open("GET", "https://api.impact.codeninjas.com/center/api/common/ninjas?sortBy=None&&displayFilters=Online");
             this.headers.forEach((value, name) => super.setRequestHeader(name, value));
@@ -60,7 +60,7 @@ const TEXT = `
         }
     }
     window.XMLHttpRequest = XMLHttpRequest;
-    
+
     post(null);
     document.getElementById("Online").click();
 })();

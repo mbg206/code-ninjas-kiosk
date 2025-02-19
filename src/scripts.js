@@ -93,17 +93,17 @@ const updateStudents = (newStudents) => {
                 ) {
                     existing.sessionLength = student.sessionLength;
                     existing.sessionEnd = getSessionEnd(student);
-    
+
                     const { children } = existing.elements.footer;
                     children[0].textContent = `${student.sessionLength} hour session`;
                     children[1].textContent = `${student.weekHours} hours this week`;
                 }
-    
+
                 if (existing.belt !== student.belt) {
                     existing.elements.belt.src = BELT_IMAGES[student.belt];
                     existing.belt = student.belt;
                 }
-    
+
                 continue;
             }
         }
@@ -128,14 +128,14 @@ const updateStudents = (newStudents) => {
             setTimeout(() => discardedStudents.delete(student.id), 1000*60*75);
             continue;
         }
-        
+
         if (student.impact) sessionEnd -= (1000*60*60*1);
 
         const elements = createCard(
             student.id, student.name, student.belt, sessionStart,
             timeRemaining, student.sessionLength, student.weekHours
         );
-        
+
         if (insertBefore !== null)
             insertBefore.after(elements.card);
         else cardContainer.appendChild(elements.card);
@@ -152,7 +152,7 @@ const updateStudents = (newStudents) => {
             elements.minutes.addEventListener("click", () => {
                 const length = storageStudent.sessionLength === 2 ? 1 : 2;
                 storageStudent.sessionLength = length;
-                
+
                 storageStudent.sessionEnd = sessionStart + (1000*60*60*length);
 
                 const { footer, minutes } = elements;
@@ -169,7 +169,7 @@ const updateStudents = (newStudents) => {
 
 const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, weekHours) => {
     const card = elem("div", "card");
-        
+
     // close button
     const close = elem("div", "card-close", '\u00D7');
     close.addEventListener("click", () => {
@@ -217,7 +217,7 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
         e.style.visibility = "hidden";
         footer.appendChild(e);
     }
-    
+
     card.append(close, header, footer);
     return {card, belt: beltImg, minutes, footer};
 };
@@ -228,7 +228,7 @@ document.addEventListener("keydown", (e) => {
             if (getTimeRemaining(student.sessionEnd) === 0) {
                 students.get(id).elements.card.remove();
                 students.delete(id);
-                
+
                 if (student.impact) {
                     discardedStudents.add(id);
                     setTimeout(() => discardedStudents.delete(id), 1000*60*60);

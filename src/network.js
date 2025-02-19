@@ -10,15 +10,14 @@ const nameToId = (firstName, lastName) => firstName.toUpperCase().trim() + lastN
 
 const update = async () => {
     const res = await fetch("https://dojo.code.ninja/api/employee/cn-ia-quad-cities/scanins/360");
-    if (!res.ok) return; // FIXME not ok when logged out?
-    const data = await res.json();
-    
-    if (data.message !== undefined) {
+    if (!res.ok) {
         cardContainer.innerHTML = "You have been logged out of dojo, please reload the page and sign back in!";
         cardContainer.className = "logged-out";
         active = false;
         return;
     }
+
+    const data = await res.json();
 
     const ninjas = [];
     for (const scanIn of data.scanIns) {
@@ -68,7 +67,7 @@ setInterval(() => {
 hookButton.addEventListener("click", async () => {
     hookButton.disabled = true;
     impactWindow = window.open("https://sensei.codeninjas.com/my-ninjas");
-    
+
     const success = await new Promise((res) => {
         const messageHandler = () => {
             clearInterval(closedInterval);
