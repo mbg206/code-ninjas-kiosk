@@ -1,9 +1,5 @@
-let active = true;
-if (window.location.origin !== "https://dojo.code.ninja") {
-    cardContainer.innerHTML = "Please follow the instructions in the readme";
-    cardContainer.className = "logged-out";
-    active = false;
-}
+if (window.location.origin !== "https://dojo.code.ninja")
+    window.location.replace("https://github.com/mbg206/code-ninjas-kiosk/blob/main/readme.md#how-to-use");
 
 const fixName = (firstName, lastName) =>
     firstName.charAt(0).toUpperCase() +
@@ -44,6 +40,8 @@ const update = async () => {
 
     updateStudents(ninjas);
 };
+
+let active = true;
 const tryUpdate = async () => {
     try {
         await update();
@@ -56,7 +54,7 @@ const tryUpdate = async () => {
         setTimeout(tryUpdate, 20000);
 };
 
-if (active) tryUpdate();
+tryUpdate();
 
 // impact hook button
 
