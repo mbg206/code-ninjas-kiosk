@@ -85,6 +85,11 @@ const updateStudents = (newStudents) => {
                 existing.card.remove();
             }
 
+            else if (existing.sessionStart !== student.sessionStart) {
+                students.delete(student.id);
+                existing.elements.card.remove();
+            }
+
             else {
                 if (
                     !student.impact &&
@@ -142,6 +147,7 @@ const updateStudents = (newStudents) => {
 
         const storageStudent = {
             belt: student.belt,
+            sessionStart: student.sessionStart,
             sessionLength: student.sessionLength,
             sessionEnd,
             elements,
