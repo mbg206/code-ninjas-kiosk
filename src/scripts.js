@@ -99,7 +99,13 @@ const updateStudents = (newStudents) => {
                     existing.sessionLength = student.sessionLength;
                     existing.sessionEnd = getSessionEnd(student);
 
-                    const { children } = existing.elements.footer;
+                    const { footer, minutes } = existing.elements;
+                    footer.classList.remove("stem");
+                    footer.classList.remove("free");
+                    footer.classList.remove("low");
+                    minutes.classList.remove("low");
+
+                    const { children } = footer;
                     children[0].textContent = `${student.sessionLength} hour session`;
                     children[1].textContent = `${student.weekHours} hours this week`;
                 }
