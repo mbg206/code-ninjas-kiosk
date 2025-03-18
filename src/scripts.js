@@ -72,7 +72,7 @@ const updateStudents = (newStudents) => {
             continue;
 
         // if existing student exists, check for belt/session length update
-        let insertBefore = null;
+        let existingCard = null;
 
         if (students.has(student.id)) {
             const existing = students.get(student.id);
@@ -81,8 +81,7 @@ const updateStudents = (newStudents) => {
                 continue; // let kiosk ninja take priority
 
             else if (!student.impact && existing.impact) {
-                insertBefore = existing.card.nextElementSibling;
-                existing.card.remove();
+                existingCard = existing.card;
             }
 
             else if (existing.sessionStart !== student.sessionStart) {
@@ -147,8 +146,10 @@ const updateStudents = (newStudents) => {
             timeRemaining, student.sessionLength, student.weekHours
         );
 
-        if (insertBefore !== null)
-            insertBefore.after(elements.card);
+        if (existingCard !== null) {
+            existingCard.after(elements.card);
+            existingCard.remove();
+        }
         else cardContainer.appendChild(elements.card);
 
         const storageStudent = {
