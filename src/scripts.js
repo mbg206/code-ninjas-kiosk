@@ -14,7 +14,11 @@ const updateTime = () => {
 
         const classList = student.elements.footer.classList;
 
-        if (timeRemaining <= 5) {
+        if (timeRemaining == 0) {
+            classList.add("zero");
+            student.elements.card.classList.add("zero");
+        }
+        else if (timeRemaining <= 5) {
             classList.add("low");
             student.elements.minutes.classList.add("low");
         }
