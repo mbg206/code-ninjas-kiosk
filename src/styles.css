@@ -158,6 +158,8 @@ body {
     background-size: 128px;
     animation: zero 3s linear infinite;
 }
+.card-footer.tour {background-color: #2C7181;}
+.card-footer.tour.tour-zero {background-color: #81582C;}
 
 .card-footer div {
     margin: 4px;
@@ -165,10 +167,9 @@ body {
 
 /* impact hook button */
 
-#impact-hook {
+#time-header button {
     position: fixed;
     top: 0px;
-    left: 0px;
     margin: 24px;
     padding: 4px;
     font-size: 12px;
@@ -179,6 +180,12 @@ body {
     opacity: 0;
     transition: opacity 0.05s linear;
 }
-#time-header:hover #impact-hook {
+#impact-hook {
+    left: 0px;
+}
+#tour {
+    right: 0px;
+}
+#time-header:hover button {
     opacity: 1;
 }

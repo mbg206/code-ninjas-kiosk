@@ -13,6 +13,12 @@ const updateTime = () => {
         student.elements.minutes.textContent = timeRemaining;
 
         const classList = student.elements.footer.classList;
+        if (student.tour) {
+            if (timeRemaining == 0)
+                classList.add("tour-zero");
+            continue;
+        }
+
 
         if (timeRemaining == 0) {
             classList.add("zero");
@@ -123,6 +129,32 @@ const updateStudents = (newStudents) => {
         }
 
         // create new card
+
+        if (student.tour) {
+            let highestTour = 0;
+            for (const s of students.values())
+                if (s.tour && s.num > highestTour)
+                    highestTour = s.num;
+            const name = `Tour ${highestTour + 1}`;
+
+            const now = Date.now();
+            const elements = createCard(
+                student.id, name, 1, now,
+                30, null, null
+            );
+            elements.footer.classList.add("tour");
+            cardContainer.appendChild(elements.card);
+
+            students.set(student.id, {
+                num: highestTour + 1,
+                belt: student.belt,
+                sessionStart: now,
+                sessionEnd: now + (1000*60*31),
+                elements,
+                tour: true
+            });
+            continue;
+        }
         
         let sessionStart, sessionEnd;
 
@@ -162,7 +194,8 @@ const updateStudents = (newStudents) => {
             sessionLength: student.sessionLength,
             sessionEnd,
             elements,
-            impact: student.impact
+            impact: student.impact,
+            tour: false
         };
 
         if (student.impact)
@@ -224,7 +257,9 @@ const createCard = (id, name, belt, sessionStart, timeRemaining, sessionLength, 
     if (belt === 0)
         footer.classList.add("jr");
 
-    const sessionLengthElem = elem("div", null, `${sessionLength} hour session`);
+    const sessionLengthElem = sessionLength === null ?
+        elem("div", null, "30 minute tour") :
+        elem("div", null, `${sessionLength} hour session`);
     footer.appendChild(sessionLengthElem);
 
     if (weekHours !== null)
@@ -251,4 +286,13 @@ document.addEventListener("keydown", (e) => {
                     setTimeout(() => discardedStudents.delete(id), 1000*60*60);
                 }
             }
+});
+
+// tour times
+
+document.getElementById("tour").addEventListener("click", () => {
+    updateStudents([{
+        id: Math.floor(Math.random() * 1000000),
+        tour: true
+    }]);
 });
