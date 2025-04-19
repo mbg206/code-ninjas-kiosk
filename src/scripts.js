@@ -113,6 +113,7 @@ const updateStudents = (newStudents) => {
                     footer.classList.remove("free");
                     footer.classList.remove("low");
                     minutes.classList.remove("low");
+                    footer.classList.remove("zero");
 
                     const { children } = footer;
                     children[0].textContent = `${student.sessionLength} hour session`;
