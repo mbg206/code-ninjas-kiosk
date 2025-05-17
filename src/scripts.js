@@ -212,6 +212,7 @@ const updateStudents = (newStudents) => {
                 footer.classList.remove("free");
                 footer.classList.remove("low");
                 minutes.classList.remove("low");
+                footer.classList.remove("zero");
                 updateTime();
             });
         students.set(student.id, storageStudent);
