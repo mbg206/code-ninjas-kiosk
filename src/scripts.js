@@ -91,7 +91,7 @@ const updateStudents = (newStudents) => {
                 continue; // let kiosk ninja take priority
 
             else if (!student.impact && existing.impact) {
-                existingCard = existing.card;
+                existingCard = existing.elements.card;
             }
 
             else if (existing.sessionStart !== student.sessionStart) {
