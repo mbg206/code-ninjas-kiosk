@@ -2,6 +2,8 @@
 
 An improved version of the Code Ninjas Kiosk display.
 
+*Note 7/25/2025 - As Code Ninjas moves further towards the new Impact curriculum, the version of the kiosk that this application was made for is likely going to be retired soon. Therefore, this repository will be archived.*
+
 ### Features
 
 - Stem/Free time indicators
